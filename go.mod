@@ -1,4 +1,4 @@
-module bloomfilter
+module github.com/hugh2632/bloomfilter
 
 go 1.13
 
