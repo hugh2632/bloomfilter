@@ -72,7 +72,7 @@ func (r *RedisFilter) Write(){
 	r.Client.Do("HSET", r.key, "Bytes",r.Bytes, "AlreadyCount", r.AlreadyExistCount )
 }
 
-func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) RedisFilter{
+func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) *RedisFilter{
 	var res RedisFilter
 	res.filter = filter{
 		Bytes: make([]byte, byteLen),
@@ -101,7 +101,7 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 	if alreadyVal != nil {
 		res.AlreadyExistCount, err = strconv.Atoi(alreadyVal.(string))
 	}
-	return res
+	return &res
 }
 
 type MysqlFilter struct {
@@ -136,7 +136,7 @@ func (r *MysqlFilter) Write() {
 	})
 }
 
-func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) MysqlFilter {
+func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) *MysqlFilter {
 	var res MysqlFilter
 	res.filter = filter{
 		Bytes:  make([]byte, byteLen),
@@ -162,7 +162,7 @@ func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash
 			}
 		}
 	})
-	return res
+	return &res
 }
 
 func newMysql(datasource string, f func(*sql.DB)) (err error) {
