@@ -1,11 +1,16 @@
 package bloomfilter
 
 import (
+	"database/sql"
+	"errors"
+	"fmt"
 	"github.com/go-redis/redis"
 	"hash"
 	"hash/crc64"
 	"hash/fnv"
+	"log"
 	"math"
+	"runtime/debug"
 	"strconv"
 )
 
@@ -16,6 +21,8 @@ type filter struct {
 	Hashes []hash.Hash64
 	AlreadyExistCount int
 }
+
+
 
 func (f *filter) Push(str []byte) {
 	var byteLen = len(f.Bytes)
@@ -95,4 +102,90 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 		res.AlreadyExistCount, err = strconv.Atoi(alreadyVal.(string))
 	}
 	return res
+}
+
+type MysqlFilter struct {
+	filter
+	datasource string
+	id         string
+}
+
+//Mysql默认存储bloom值的库
+type Bloom struct {
+	Id  int
+	Val string
+}
+
+func (r *MysqlFilter) Write() {
+	_ = newMysql(r.datasource, func(db *sql.DB) {
+		rows, err := db.Query("select * from bloom where id='" + r.id + "'")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if rows.Next() {
+			_, err = db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
+			if err != nil {
+				log.Println("更新bloom失败")
+			}
+		} else {
+			_, err = db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
+			if err != nil {
+				log.Println("插入bloom失败" + err.Error())
+			}
+		}
+	})
+}
+
+func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) MysqlFilter {
+	var res MysqlFilter
+	res.filter = filter{
+		Bytes:  make([]byte, byteLen),
+		Hashes: hashes,
+	}
+	res.datasource = datasource
+	res.id = id
+	_ = newMysql(datasource, func(db *sql.DB) {
+		rows, err := db.Query("select id, val from bloom where id='" + id + "'")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if rows.Next() {
+			var bl Bloom
+			err = rows.Scan(&bl.Id, &bl.Val)
+			if err == nil {
+				var bytes = []byte(bl.Val)
+				if len(bytes) == byteLen {
+					res.filter.Bytes = bytes
+				}
+			} else {
+				log.Println(err.Error())
+			}
+		}
+	})
+	return res
+}
+
+func newMysql(datasource string, f func(*sql.DB)) (err error) {
+	if p := recover(); p != nil {
+		str, ok := p.(string)
+		if ok {
+			err = errors.New(str)
+			log.Println(str)
+			fmt.Println(str)
+		} else {
+			err = errors.New("panic")
+		}
+		debug.PrintStack()
+	}
+	db, err := sql.Open("mysql", datasource)
+	if err != nil {
+		panic("打开数据库失败," + err.Error())
+	}
+	defer db.Close()
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+	f(db)
+	return err
 }
