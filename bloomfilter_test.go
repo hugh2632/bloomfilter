@@ -156,7 +156,7 @@ func BenchmarkFilter_Push(b *testing.B) {
 
 func TestWriteToRedis(t *testing.T){
 	var Client = redis.NewClient(&redis.Options{
-		Addr:     "192.168.159.8:6379",
+		Addr:     "192.168.30.156:6379",
 		Password: "", // no password set
 		DB:       1,  // use default DB
 	})

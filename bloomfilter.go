@@ -22,8 +22,6 @@ type filter struct {
 	AlreadyExistCount int
 }
 
-
-
 func (f *filter) Push(str []byte) {
 	var byteLen = len(f.Bytes)
 	for _, v := range f.Hashes {
@@ -64,12 +62,17 @@ func GetFlasePositiveRate(m int, n int, k int) float64 {
 
 type RedisFilter struct{
 	filter
-	*redis.Client
+	cli redis.Client
 	key string
 }
 
 func (r *RedisFilter) Write(){
-	r.Client.Do("HSET", r.key, "Bytes",r.Bytes, "AlreadyCount", r.AlreadyExistCount )
+	r.cli.Do("HSET", r.key, "Bytes",r.Bytes, "AlreadyCount", r.AlreadyExistCount )
+}
+
+func (r *RedisFilter) Close(){
+	r.cli.Do("HSET", r.key, "Bytes",r.Bytes, "AlreadyCount", r.AlreadyExistCount )
+	r.cli.Close()
 }
 
 func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) *RedisFilter{
@@ -78,17 +81,17 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 		Bytes: make([]byte, byteLen),
 		Hashes: hashes,
 	}
-	res.Client = redis.NewClient(&redis.Options{
+	res.cli = *redis.NewClient(&redis.Options{
 		Addr:     redisAddr,
 		Password: psd, // no password set
 		DB:       db,  // use default DB
 	})
 	res.key = key
-	_, err := res.Client.Ping().Result()
+	_, err := res.cli.Ping().Result()
 	if err != nil {
 		panic(err)
 	}
-	var cmd = res.Client.Do("HGET", key, "Bytes")
+	var cmd = res.cli.Do("HGET", key, "Bytes")
 	var val = cmd.Val()
 	if val != nil {
 		var bytes = []byte(val.(string))
@@ -96,7 +99,7 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 			res.filter.Bytes = bytes
 		}
 	}
-	var AlreadyCountcmd = res.Client.Do("HGET", key, "AlreadyCount")
+	var AlreadyCountcmd = res.cli.Do("HGET", key, "AlreadyCount")
 	var alreadyVal = AlreadyCountcmd.Val()
 	if alreadyVal != nil {
 		res.AlreadyExistCount, err = strconv.Atoi(alreadyVal.(string))
