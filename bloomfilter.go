@@ -139,6 +139,26 @@ func (r *MysqlFilter) Write() {
 	})
 }
 
+func (r *MysqlFilter) Close() {
+	_ = newMysql(r.datasource, func(db *sql.DB) {
+		rows, err := db.Query("select * from bloom where id='" + r.id + "'")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if rows.Next() {
+			_, err = db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
+			if err != nil {
+				log.Println("更新bloom失败")
+			}
+		} else {
+			_, err = db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
+			if err != nil {
+				log.Println("插入bloom失败" + err.Error())
+			}
+		}
+	})
+}
+
 func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) *MysqlFilter {
 	var res MysqlFilter
 	res.filter = filter{
