@@ -11,7 +11,6 @@ import (
 	"log"
 	"math"
 	"runtime/debug"
-	"strconv"
 )
 
 var DefaultHash = []hash.Hash64{fnv.New64(), crc64.New( crc64.MakeTable(crc64.ISO))}
@@ -19,21 +18,21 @@ var DefaultHash = []hash.Hash64{fnv.New64(), crc64.New( crc64.MakeTable(crc64.IS
 type filter struct {
 	Bytes  []byte
 	Hashes []hash.Hash64
-	AlreadyExistCount int
 }
 
 func (f *filter) Push(str []byte) {
 	var byteLen = len(f.Bytes)
 	for _, v := range f.Hashes {
 		v.Reset()
-		v.Write(str)
+		_, err := v.Write(str)
+		if err != nil {
+			log.Println(err.Error())
+		}
 		var res = v.Sum64()
 		var yByte = res % uint64(byteLen)
 		var yBit = res & 7
-		//todo 遇到大端模式CPU可能会出现 BUG
 		var now = f.Bytes[yByte] | 1 << yBit
 		if now != f.Bytes[yByte] {
-			f.AlreadyExistCount ++
 			f.Bytes[yByte] = now
 		}
 
@@ -44,12 +43,23 @@ func (f *filter) Exists(str []byte) bool {
 	var byteLen = len(f.Bytes)
 	for _, v := range f.Hashes {
 		v.Reset()
-		v.Write(str)
+		_, err := v.Write(str)
+		if err != nil {
+			log.Println(err.Error())
+		}
 		var res = v.Sum64()
 		var yByte = res % uint64(byteLen)
 		var yBit = res & 7
-		//todo 遇到大端模式CPU可能会出现 BUG
 		if f.Bytes[yByte]|1<<yBit != f.Bytes[yByte] {
+			return false
+		}
+	}
+	return true
+}
+
+func (f *filter) IsEmpty() bool {
+	for i, _ := range f.Bytes {
+		if f.Bytes[i] != 0 {
 			return false
 		}
 	}
@@ -62,36 +72,43 @@ func GetFlasePositiveRate(m int, n int, k int) float64 {
 
 type RedisFilter struct{
 	filter
-	cli redis.Client
+	cli *redis.Client
 	key string
 }
 
-func (r *RedisFilter) Write(){
-	r.cli.Do("HSET", r.key, "Bytes",r.Bytes, "AlreadyCount", r.AlreadyExistCount )
+func (r *RedisFilter) Write() error{
+	return r.cli.Do("HSET", r.key, "Bytes",r.Bytes).Err()
 }
 
-func (r *RedisFilter) Close(){
-	r.cli.Do("HSET", r.key, "Bytes",r.Bytes, "AlreadyCount", r.AlreadyExistCount )
-	r.cli.Close()
-}
-
-func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) *RedisFilter{
-	var res RedisFilter
-	res.filter = filter{
-		Bytes: make([]byte, byteLen),
-		Hashes: hashes,
-	}
-	res.cli = *redis.NewClient(&redis.Options{
-		Addr:     redisAddr,
-		Password: psd, // no password set
-		DB:       db,  // use default DB
-	})
-	res.key = key
-	_, err := res.cli.Ping().Result()
+func (r *RedisFilter) Close() error{
+	err := r.Write()
 	if err != nil {
-		panic(err)
+		return err
+	}
+	return r.cli.Close()
+}
+
+func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) (res *RedisFilter, err error){
+	res = &RedisFilter{
+		filter:filter{
+			Bytes: make([]byte, byteLen),
+			Hashes: hashes,
+		},
+		cli : redis.NewClient(&redis.Options{
+			Addr:     redisAddr,
+			Password: psd, // no password set
+			DB:       db,  // use default DB
+		}),
+		key: key,
+	}
+	_, err = res.cli.Ping().Result()
+	if err != nil {
+		return nil, err
 	}
 	var cmd = res.cli.Do("HGET", key, "Bytes")
+	if err = cmd.Err(); err != nil {
+		return nil, err
+	}
 	var val = cmd.Val()
 	if val != nil {
 		var bytes = []byte(val.(string))
@@ -99,12 +116,7 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 			res.filter.Bytes = bytes
 		}
 	}
-	var AlreadyCountcmd = res.cli.Do("HGET", key, "AlreadyCount")
-	var alreadyVal = AlreadyCountcmd.Val()
-	if alreadyVal != nil {
-		res.AlreadyExistCount, err = strconv.Atoi(alreadyVal.(string))
-	}
-	return &res
+	return res, nil
 }
 
 type MysqlFilter struct {
@@ -119,8 +131,8 @@ type Bloom struct {
 	Val string
 }
 
-func (r *MysqlFilter) Write() {
-	_ = newMysql(r.datasource, func(db *sql.DB) {
+func (r *MysqlFilter) Write() error {
+	return newMysql(r.datasource, func(db *sql.DB) {
 		rows, err := db.Query("select * from bloom where id='" + r.id + "'")
 		if err != nil {
 			log.Fatal(err)
@@ -139,8 +151,8 @@ func (r *MysqlFilter) Write() {
 	})
 }
 
-func (r *MysqlFilter) Close() {
-	_ = newMysql(r.datasource, func(db *sql.DB) {
+func (r *MysqlFilter) Close() error{
+	return newMysql(r.datasource, func(db *sql.DB) {
 		rows, err := db.Query("select * from bloom where id='" + r.id + "'")
 		if err != nil {
 			log.Fatal(err)
@@ -159,15 +171,16 @@ func (r *MysqlFilter) Close() {
 	})
 }
 
-func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) *MysqlFilter {
-	var res MysqlFilter
-	res.filter = filter{
-		Bytes:  make([]byte, byteLen),
-		Hashes: hashes,
+func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) (res *MysqlFilter, err error) {
+	res = &MysqlFilter{
+		filter: filter{
+			Bytes:  make([]byte, byteLen),
+			Hashes: hashes,
+		},
+		datasource:datasource,
+		id: id,
 	}
-	res.datasource = datasource
-	res.id = id
-	_ = newMysql(datasource, func(db *sql.DB) {
+	err = newMysql(datasource, func(db *sql.DB) {
 		rows, err := db.Query("select id, val from bloom where id='" + id + "'")
 		if err != nil {
 			log.Fatal(err)
@@ -185,7 +198,7 @@ func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash
 			}
 		}
 	})
-	return &res
+	return res, err
 }
 
 func newMysql(datasource string, f func(*sql.DB)) (err error) {
