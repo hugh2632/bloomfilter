@@ -107,13 +107,18 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 	}
 	var cmd = res.cli.Do("HGET", key, "Bytes")
 	if err = cmd.Err(); err != nil {
-		return nil, err
-	}
-	var val = cmd.Val()
-	if val != nil {
-		var bytes = []byte(val.(string))
-		if len(bytes) == byteLen{
-			res.filter.Bytes = bytes
+		if err.Error() == "redis: nil"{
+			res.cli.Do("HSET", key, "Bytes", res.Bytes)
+		}else {
+			return nil, err
+		}
+	}else{
+		var val = cmd.Val()
+		if val != nil {
+			var bytes = []byte(val.(string))
+			if len(bytes) == byteLen{
+				res.Bytes = bytes
+			}
 		}
 	}
 	return res, nil
