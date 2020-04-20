@@ -2,15 +2,12 @@ package bloomfilter
 
 import (
 	"database/sql"
-	"errors"
-	"fmt"
 	"github.com/go-redis/redis"
 	"hash"
 	"hash/crc64"
 	"hash/fnv"
 	"log"
 	"math"
-	"runtime/debug"
 )
 
 var DefaultHash = []hash.Hash64{fnv.New64(), crc64.New( crc64.MakeTable(crc64.ISO))}
@@ -81,10 +78,6 @@ func (r *RedisFilter) Write() error{
 }
 
 func (r *RedisFilter) Close() error{
-	err := r.Write()
-	if err != nil {
-		return err
-	}
 	return r.cli.Close()
 }
 
@@ -126,7 +119,7 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 
 type MysqlFilter struct {
 	filter
-	datasource string
+	db *sql.DB
 	id         string
 }
 
@@ -137,96 +130,60 @@ type Bloom struct {
 }
 
 func (r *MysqlFilter) Write() error {
-	return newMysql(r.datasource, func(db *sql.DB) {
-		rows, err := db.Query("select * from bloom where id='" + r.id + "'")
+	rows, err := r.db.Query("select * from bloom where id='" + r.id + "'")
+	if err != nil {
+		return err
+	}
+	if rows.Next() {
+		_, err = r.db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
-		if rows.Next() {
-			_, err = db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
-			if err != nil {
-				log.Println("更新bloom失败")
-			}
-		} else {
-			_, err = db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
-			if err != nil {
-				log.Println("插入bloom失败" + err.Error())
-			}
+	} else {
+		_, err = r.db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
+		if err != nil {
+			return err
 		}
-	})
+	}
+	return nil
 }
 
 func (r *MysqlFilter) Close() error{
-	return newMysql(r.datasource, func(db *sql.DB) {
-		rows, err := db.Query("select * from bloom where id='" + r.id + "'")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if rows.Next() {
-			_, err = db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
-			if err != nil {
-				log.Println("更新bloom失败")
-			}
-		} else {
-			_, err = db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
-			if err != nil {
-				log.Println("插入bloom失败" + err.Error())
-			}
-		}
-	})
+	return r.db.Close()
 }
 
 func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) (res *MysqlFilter, err error) {
-	res = &MysqlFilter{
+	db, err := sql.Open("mysql", datasource)
+	if err != nil {
+		return nil, err
+	}
+	err = db.Ping()
+	if err != nil {
+		return nil, err
+	}
+	rows, err := db.Query("select id, val from bloom where id='" + id + "'")
+	if err != nil {
+		return nil, err
+	}
+	if rows.Next() {
+		var bl Bloom
+		err = rows.Scan(&bl.Id, &bl.Val)
+		if err == nil {
+			var bytes = []byte(bl.Val)
+			if len(bytes) == byteLen {
+				res.filter.Bytes = bytes
+			}
+		} else {
+			return nil, err
+		}
+	}
+	return &MysqlFilter{
 		filter: filter{
 			Bytes:  make([]byte, byteLen),
 			Hashes: hashes,
 		},
-		datasource:datasource,
+		db:	db,
 		id: id,
-	}
-	err = newMysql(datasource, func(db *sql.DB) {
-		rows, err := db.Query("select id, val from bloom where id='" + id + "'")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if rows.Next() {
-			var bl Bloom
-			err = rows.Scan(&bl.Id, &bl.Val)
-			if err == nil {
-				var bytes = []byte(bl.Val)
-				if len(bytes) == byteLen {
-					res.filter.Bytes = bytes
-				}
-			} else {
-				log.Println(err.Error())
-			}
-		}
-	})
-	return res, err
+	}, err
 }
 
-func newMysql(datasource string, f func(*sql.DB)) (err error) {
-	if p := recover(); p != nil {
-		str, ok := p.(string)
-		if ok {
-			err = errors.New(str)
-			log.Println(str)
-			fmt.Println(str)
-		} else {
-			err = errors.New("panic")
-		}
-		debug.PrintStack()
-	}
-	db, err := sql.Open("mysql", datasource)
-	if err != nil {
-		panic("打开数据库失败," + err.Error())
-	}
-	defer db.Close()
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
-	f(db)
-	return err
-}
