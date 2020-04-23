@@ -2,6 +2,7 @@ package bloomfilter
 
 import (
 	"database/sql"
+	"errors"
 	"github.com/go-redis/redis"
 	"hash"
 	"hash/crc64"
@@ -78,7 +79,10 @@ func (r *RedisFilter) Write() error{
 }
 
 func (r *RedisFilter) Close() error{
-	return r.cli.Close()
+	if r.cli != nil {
+		return r.cli.Close()
+	}
+	return errors.New("bloom还未初始化")
 }
 
 func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) (res *RedisFilter, err error){
@@ -149,7 +153,10 @@ func (r *MysqlFilter) Write() error {
 }
 
 func (r *MysqlFilter) Close() error{
-	return r.db.Close()
+	if r.db != nil {
+		return r.db.Close()
+	}
+	return errors.New("bloom还未初始化")
 }
 
 func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) (res *MysqlFilter, err error) {
