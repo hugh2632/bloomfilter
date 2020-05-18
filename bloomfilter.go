@@ -2,7 +2,6 @@ package bloomfilter
 
 import (
 	"database/sql"
-	"errors"
 	"github.com/go-redis/redis"
 	"hash"
 	"hash/crc64"
@@ -70,19 +69,27 @@ func GetFlasePositiveRate(m int, n int, k int) float64 {
 
 type RedisFilter struct{
 	filter
-	cli *redis.Client
+	address string
+	password string
+	db	int
 	key string
 }
 
 func (r *RedisFilter) Write() error{
-	return r.cli.Do("HSET", r.key, "Bytes",r.Bytes).Err()
+	var cli = redis.NewClient(&redis.Options{
+		Addr:     r.address,
+		Password: r.password, // no password set
+		DB:       r.db,  // use default DB
+	})
+	err := cli.Do("HSET", r.key, "Bytes",r.Bytes).Err()
+	if err != nil {
+		return err
+	}
+	return cli.Close()
 }
 
 func (r *RedisFilter) Close() error{
-	if r.cli != nil {
-		return r.cli.Close()
-	}
-	return errors.New("bloom还未初始化")
+	return nil
 }
 
 func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db int,  hashes ...hash.Hash64) (res *RedisFilter, err error){
@@ -91,21 +98,25 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 			Bytes: make([]byte, byteLen),
 			Hashes: hashes,
 		},
-		cli : redis.NewClient(&redis.Options{
-			Addr:     redisAddr,
-			Password: psd, // no password set
-			DB:       db,  // use default DB
-		}),
+		address:     redisAddr,
+		password: psd, // no password set
+		db:       db,  // use default DB
 		key: key,
 	}
-	_, err = res.cli.Ping().Result()
+	var cli = redis.NewClient(&redis.Options{
+		Addr:     redisAddr,
+		Password: psd, // no password set
+		DB:       db,  // use default DB
+	})
+	_, err = cli.Ping().Result()
 	if err != nil {
 		return nil, err
 	}
-	var cmd = res.cli.Do("HGET", key, "Bytes")
+	defer cli.Close()
+	var cmd = cli.Do("HGET", key, "Bytes")
 	if err = cmd.Err(); err != nil {
 		if err.Error() == "redis: nil"{
-			res.cli.Do("HSET", key, "Bytes", res.Bytes)
+			cli.Do("HSET", key, "Bytes", res.Bytes)
 		}else {
 			return nil, err
 		}
@@ -123,7 +134,7 @@ func NewRedisFilter(key string, byteLen int, redisAddr string, psd string, db in
 
 type MysqlFilter struct {
 	filter
-	db *sql.DB
+	datasource string
 	id         string
 }
 
@@ -134,17 +145,22 @@ type Bloom struct {
 }
 
 func (r *MysqlFilter) Write() error {
-	rows, err := r.db.Query("select * from bloom where id='" + r.id + "'")
+	db, err := sql.Open("mysql", r.datasource)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	rows, err := db.Query("select * from bloom where id='" + r.id + "'")
 	if err != nil {
 		return err
 	}
 	if rows.Next() {
-		_, err = r.db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
+		_, err = db.Exec("update bloom set val='" + string(r.Bytes) + "' where id=" + r.id)
 		if err != nil {
 			return err
 		}
 	} else {
-		_, err = r.db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
+		_, err = db.Exec("insert into bloom(Id, Val) values (" + r.id + ",'" + string(r.Bytes) + "');")
 		if err != nil {
 			return err
 		}
@@ -153,10 +169,7 @@ func (r *MysqlFilter) Write() error {
 }
 
 func (r *MysqlFilter) Close() error{
-	if r.db != nil {
-		return r.db.Close()
-	}
-	return errors.New("bloom还未初始化")
+	return nil
 }
 
 func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash64) (res *MysqlFilter, err error) {
@@ -168,6 +181,7 @@ func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash
 	if err != nil {
 		return nil, err
 	}
+	defer db.Close()
 	rows, err := db.Query("select id, val from bloom where id='" + id + "'")
 	if err != nil {
 		return nil, err
@@ -178,7 +192,7 @@ func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash
 		if err == nil {
 			var bytes = []byte(bl.Val)
 			if len(bytes) == byteLen {
-				res.filter.Bytes = bytes
+				res.Bytes = bytes
 			}
 		} else {
 			return nil, err
@@ -189,7 +203,6 @@ func NewSqlFilter(id string, byteLen int, datasource string, hashes ...hash.Hash
 			Bytes:  make([]byte, byteLen),
 			Hashes: hashes,
 		},
-		db:	db,
 		id: id,
 	}, err
 }

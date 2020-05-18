@@ -172,7 +172,7 @@ func TestWriteToRedis(t *testing.T){
 }
 
 func TestNewRedisFilter(t *testing.T) {
-	var rf = NewRedisFilter("test", 1000, "192.168.159.8:6379","", 1, DefaultHash...)
+	var rf, _ = NewRedisFilter("test", 1000, "192.168.30.156:6379","", 3, DefaultHash...)
 	for _, v:= range testData{
 		rf.Push([]byte(v))
 	}
@@ -182,7 +182,10 @@ func TestNewRedisFilter(t *testing.T) {
 }
 
 func BenchmarkNewRedisFilter(b *testing.B) {
-	var rf = NewRedisFilter("test", 1000, "192.168.159.8:6379","", 1, DefaultHash...)
+	var rf, err = NewRedisFilter("test", 1000, "192.168.30.156:6379","", 1, DefaultHash...)
+	if err != nil {
+		b.Fatal(err.Error())
+	}
 	b.ResetTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next(){

@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="86b05030-4bd3-44c8-be55-d637b4582c61" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/bloomfilter.go" beforeDir="false" afterPath="$PROJECT_DIR$/bloomfilter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bloomfilter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/bloomfilter_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +18,33 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bloomfilter.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="158" column="33" selection-start-line="158" selection-start-column="33" selection-end-line="158" selection-end-column="33" />
+            <state relative-caret-position="399">
+              <caret line="87" column="11" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+              <folding>
+                <element signature="n#!!block;n#Exists#0" />
+                <element signature="n#!!block;n#IsEmpty#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bloomfilter_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="178" column="9" lean-forward="true" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
+              <folding>
+                <element signature="e#173#10676#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://C:/Go/src/testing/benchmark.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="734" selection-start-line="734" selection-end-line="734" />
             </state>
           </provider>
         </entry>
@@ -100,39 +128,37 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestWriteToRedis in github.com/hugh2632/bloomfilter">
+  <component name="RunManager" selected="Go Test.BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter">
+    <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bloomfilter" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gobench" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hugh2632/bloomfilter" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^BenchmarkNewRedisFilter$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bloomfilter" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hugh2632/bloomfilter" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestNewRedisFilter$" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestWriteToRedis in github.com/hugh2632/bloomfilter" />
-        <item itemvalue="Go Test.TestNewRedisFilter in bloomfilter" />
-        <item itemvalue="Go Test.BenchmarkNewRedisFilter in bloomfilter" />
-        <item itemvalue="Go Test.TestWriteToRedis in bloomfilter" />
-        <item itemvalue="Go Test.BenchmarkFilter_Push in bloomfilter" />
+        <item itemvalue="Go Test.BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" />
+        <item itemvalue="Go Test.TestNewRedisFilter in github.com/hugh2632/bloomfilter" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestWriteToRedis_in_bloomfilter - 2019.12.19 at 01h 54m 52s.xml">
-      <configuration name="TestWriteToRedis in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 01h 57m 37s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 01h 59m 17s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 01h 59m 56s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 02h 00m 37s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 02h 01m 04s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="BenchmarkNewRedisFilter_in_bloomfilter - 2019.12.19 at 02h 01m 25s.xml">
-      <configuration name="BenchmarkNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 02h 02m 39s.xml">
       <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -141,6 +167,27 @@
     </history-entry>
     <history-entry file="TestWriteToRedis_in_github_com_hugh2632_bloomfilter - 2020.03.31 at 12h 57m 03s.xml">
       <configuration name="TestWriteToRedis in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 15h 58m 38s.xml">
+      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 15h 59m 05s.xml">
+      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 15h 59m 52s.xml">
+      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 00m 30s.xml">
+      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="BenchmarkNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 00m 49s.xml">
+      <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="BenchmarkNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 02m 13s.xml">
+      <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="BenchmarkNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 02m 31s.xml">
+      <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -153,16 +200,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28441754" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2803838" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32872504" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.164859" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39938557" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4273319" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32872504" />
@@ -188,14 +235,16 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/bloomfilter.go</url>
-          <line>20</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/bloomfilter_test.go</url>
+          <line>175</line>
+          <properties />
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/bloomfilter.go</url>
-          <line>30</line>
-          <option name="timeStamp" value="2" />
+          <line>95</line>
+          <properties />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -243,16 +292,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bloomfilter_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="158" column="33" selection-start-line="158" selection-start-column="33" selection-end-line="158" selection-end-column="33" />
-          <folding>
-            <element signature="e#173#10676#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/go.mod">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -277,10 +316,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Go/src/testing/benchmark.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="734" selection-start-line="734" selection-end-line="734" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bloomfilter_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="178" column="9" lean-forward="true" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
+          <folding>
+            <element signature="e#173#10676#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bloomfilter.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="158" column="33" selection-start-line="158" selection-start-column="33" selection-end-line="158" selection-end-column="33" />
+        <state relative-caret-position="399">
+          <caret line="87" column="11" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+          <folding>
+            <element signature="n#!!block;n#Exists#0" />
+            <element signature="n#!!block;n#IsEmpty#0" />
+          </folding>
         </state>
       </provider>
     </entry>
