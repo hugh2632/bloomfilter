@@ -7,6 +7,7 @@ import (
 	"hash/crc64"
 	"hash/fnv"
 	"runtime"
+	"sync"
 	"testing"
 )
 
@@ -113,6 +114,12 @@ var testData = []string{
 	"四二5DbLBNaKRT9YJ六aX6EaE一6BN三四c6CPDF3T三WP三M1QdO五LQP八九L9O四7八1W06一XIHAUWGWYD三D9一CST0YFR十XE二二九b十六O93Z9M七一",
 }
 
+var cli =redis.NewClient(&redis.Options{
+	Addr:     "192.168.30.156:6379",
+	Password: "", // no password set
+	DB:       4,  // use default DB
+})
+
 func TestHash(t *testing.T){
 	var f = fnv.New64()
 	f.Reset()
@@ -172,17 +179,26 @@ func TestWriteToRedis(t *testing.T){
 }
 
 func TestNewRedisFilter(t *testing.T) {
-	var rf, _ = NewRedisFilter("test", 1000, "192.168.30.156:6379","", 3, DefaultHash...)
+	var rf, _ = NewRedisFilter(cli,"test", 1000, DefaultHash...)
+	var wg sync.WaitGroup
 	for _, v:= range testData{
-		rf.Push([]byte(v))
+		wg.Add(1)
+		go func(s string) {
+			defer wg.Done()
+			rf.Push([]byte(s))
+			er := rf.Write()
+			if er != nil {
+				t.Fatal(er.Error())
+			}
+		}(v)
 	}
-	rf.Write()
+	wg.Wait()
 	t.Log(rf.Exists([]byte("234")))
 	t.Log(rf.Exists([]byte("I四八FHTQ2九四Zb7GT5McEIP1MWGLF五26SdGG7bSMFY五WSV8F5UVSC十C一5EQ六IULE十七IRO二四c4MVBP7VEHBJ8TX4一663HeJ四QZ九1L12")))
 }
 
 func BenchmarkNewRedisFilter(b *testing.B) {
-	var rf, err = NewRedisFilter("test", 1000, "192.168.30.156:6379","", 1, DefaultHash...)
+	var rf, err = NewRedisFilter(cli,"test", 1000, DefaultHash...)
 	if err != nil {
 		b.Fatal(err.Error())
 	}
