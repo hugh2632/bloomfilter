@@ -12,7 +12,7 @@ type RedisFilter struct{
 }
 
 func (r *RedisFilter) Write() error{
-	return r.cli.Do("HSET", r.key, "Bytes",r.Bytes).Err()
+	return r.cli.HSet("bloom", r.key, r.Bytes).Err()
 }
 
 func (r *RedisFilter) Close() error{
@@ -32,20 +32,18 @@ func NewRedisFilter(cli *redis.Client, key string, byteLen int,  hashes ...hash.
 		key:key,
 		cli:cli,
 	}
-	var cmd = cli.Do("HGET", key, "Bytes")
+	var cmd = cli.HGet("bloom", key)
 	if err = cmd.Err(); err != nil {
 		if err.Error() == "redis: nil"{
-			cli.Do("HSET", key, "Bytes", res.Bytes)
+			cli.HSet("bloom", key, res.Bytes)
 		}else {
 			return nil, err
 		}
 	}else{
 		var val = cmd.Val()
-		if val != nil {
-			var bytes = []byte(val.(string))
-			if len(bytes) == byteLen{
-				res.Bytes = bytes
-			}
+		var bytes = []byte(val)
+		if len(bytes) == byteLen{
+			res.Bytes = bytes
 		}
 	}
 	return res, nil
