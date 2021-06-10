@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="86b05030-4bd3-44c8-be55-d637b4582c61" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/global/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/memory/memory.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/redis/cached.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/redis/interactive.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/sql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/common.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/memoryfilter_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/redisfilter_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/sqlfilter_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bloomfilter_redis.go" beforeDir="false" afterPath="$PROJECT_DIR$/bloomfilter_redis.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bloomfilter.go" beforeDir="false" afterPath="$PROJECT_DIR$/bloomfilter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bloomfilter_redis.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bloomfilter_sql.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bloomfilter_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifilter.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,108 +58,98 @@
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-7" />
-    <option name="width" value="1378" />
-    <option name="height" value="745" />
-  </component>
+  <component name="ProjectId" id="1rkGobgy2R8mV5ENMjrgGoXLVtu" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/redis" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
-  <component name="RunManager" selected="Go Test.TestNewRedisFilter in github.com/hugh2632/bloomfilter (1)">
-    <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Golang\bloomfilter\sql" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\Golang\bloomfilter\redis" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.TestMemoryFilter in github.com/hugh2632/bloomfilter/test">
+    <configuration name="TestCachedFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gobench" />
-      <kind value="PACKAGE" />
-      <package value="github.com/hugh2632/bloomfilter" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^BenchmarkNewRedisFilter$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestFilter_Push in github.com/hugh2632/bloomfilter" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="bloomfilter" />
-      <working_directory value="$PROJECT_DIR$" />
+      <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/hugh2632/bloomfilter" />
+      <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestFilter_Push$" />
+      <pattern value="^TestCachedFilter$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestInteractiveRedisFalsePositiveRate in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
-      <working_directory value="$PROJECT_DIR$" />
+      <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/hugh2632/bloomfilter" />
+      <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestNewRedisFilter$" />
+      <pattern value="^TestInteractiveRedisFalsePositiveRate$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestIsSame in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
-      <working_directory value="$PROJECT_DIR$" />
+      <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/hugh2632/bloomfilter" />
+      <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestNewRedisFilter$" />
+      <pattern value="^TestIsSame$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bloomfilter" />
+      <working_directory value="$PROJECT_DIR$/test" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hugh2632/bloomfilter/test" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestMemFalsePositiveRate$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestMemoryFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bloomfilter" />
+      <working_directory value="$PROJECT_DIR$/test" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hugh2632/bloomfilter/test" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestMemoryFilter$" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestNewRedisFilter in github.com/hugh2632/bloomfilter (1)" />
-        <item itemvalue="Go Test.TestFilter_Push in github.com/hugh2632/bloomfilter" />
-        <item itemvalue="Go Test.TestNewRedisFilter in github.com/hugh2632/bloomfilter" />
-        <item itemvalue="Go Test.BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" />
+        <item itemvalue="Go Test.TestMemoryFilter in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestCachedFilter in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestIsSame in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestInteractiveRedisFalsePositiveRate in github.com/hugh2632/bloomfilter/test" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="TestHistory">
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 02h 02m 39s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_bloomfilter - 2019.12.19 at 02h 03m 20s.xml">
-      <configuration name="TestNewRedisFilter in bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestWriteToRedis_in_github_com_hugh2632_bloomfilter - 2020.03.31 at 12h 57m 03s.xml">
-      <configuration name="TestWriteToRedis in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 15h 58m 38s.xml">
-      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 15h 59m 05s.xml">
-      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 15h 59m 52s.xml">
-      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 00m 30s.xml">
-      <configuration name="TestNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="BenchmarkNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 00m 49s.xml">
-      <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="BenchmarkNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 02m 13s.xml">
-      <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="BenchmarkNewRedisFilter_in_github_com_hugh2632_bloomfilter - 2020.05.18 at 16h 02m 31s.xml">
-      <configuration name="BenchmarkNewRedisFilter in github.com/hugh2632/bloomfilter" configurationId="GoTestRunConfiguration" />
-    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -137,7 +161,49 @@
     </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -148,13 +214,71 @@
     </environment>
     <proxy>https://mirrors.aliyun.com/goproxy/</proxy>
   </component>
+  <component name="WindowStateProjectService">
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1623134318569">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1623134318569" />
+    <state x="715" y="222" key="#xdebugger.evaluate" timestamp="1623208316817">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="715" y="222" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1623208316817" />
+    <state width="972" height="466" key="DebuggerActiveHint" timestamp="1623305423487">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="972" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1623305423487" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1623140578091">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1623140578091" />
+    <state width="1877" height="318" key="GridCell.Tab.0.bottom" timestamp="1623318967228">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="318" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623318967228" />
+    <state width="1877" height="318" key="GridCell.Tab.0.center" timestamp="1623318967228">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="318" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623318967228" />
+    <state width="1877" height="318" key="GridCell.Tab.0.left" timestamp="1623318967228">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="318" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623318967228" />
+    <state width="1877" height="318" key="GridCell.Tab.0.right" timestamp="1623318967228">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="318" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623318967228" />
+    <state width="1877" height="299" key="GridCell.Tab.1.bottom" timestamp="1623315453138">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="299" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623315453138" />
+    <state width="1877" height="299" key="GridCell.Tab.1.center" timestamp="1623315453138">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="299" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623315453138" />
+    <state width="1877" height="299" key="GridCell.Tab.1.left" timestamp="1623315453138">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="299" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623315453138" />
+    <state width="1877" height="299" key="GridCell.Tab.1.right" timestamp="1623315453138">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="299" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623315453138" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1623289958680">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1623289958680" />
+    <state x="662" y="254" width="596" height="532" key="find.popup" timestamp="1623304920305">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="662" y="254" width="596" height="532" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1623304920305" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/bloomfilter_test.go</url>
-          <line>184</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/bloomfilter.go</url>
+          <line>2</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
