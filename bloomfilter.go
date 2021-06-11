@@ -64,7 +64,7 @@ func NewMemoryFilter(bytes []byte, hashes ...hash.Hash64) IFilter {
 // 数据保存到redis的过滤器。
 // 如果选择CachedFilter, 其实是在本地维护了一个MemoryFilter, 只有在使用Write方法时才会真正提交到Redis服务器。
 // 如果选择InteractiveFilter, 将在每次Push数据的时候，直接提交到redis服务器。(集群中需要使用分布式锁)
-func NewRedisFilter(cli *redis.Client, tp RedisFilterType, key string, byteLen uint64, hashes ...hash.Hash64) (res IFilter, err error) {
+func NewRedisFilter(context context.Context, cli *redis.Client, tp RedisFilterType, key string, byteLen uint64, hashes ...hash.Hash64) (res IFilter, err error) {
 	switch tp {
 	case RedisFilterType_Cached:
 		f := &rf.CachedFilter{
@@ -73,7 +73,7 @@ func NewRedisFilter(cli *redis.Client, tp RedisFilterType, key string, byteLen u
 				Hashes: hashes,
 			},
 		}
-		err := f.Init(cli, "bloom", key) // The default hashtable name is 'bloom'
+		err := f.Init(context, cli, "bloom", key) // The default hashtable name is 'bloom'
 		if err != nil {
 			return nil, err
 		}
@@ -82,7 +82,7 @@ func NewRedisFilter(cli *redis.Client, tp RedisFilterType, key string, byteLen u
 		f := &rf.InteractiveFilter{
 			Key:     key,
 			Cli:     cli,
-			Context: context.TODO(),
+			Context: context,
 			ByteLen: byteLen,
 			Hashes:  hashes,
 		}

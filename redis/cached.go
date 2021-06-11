@@ -21,15 +21,15 @@ type CachedFilter struct {
 
 // Initial the local bytes from the BITMAP on redis server.
 // 同步Redis服务器上的BITMAP到本地的字节数组。
-func (f *CachedFilter) Init(cli *redis.Client, hashTableName string, key string) error {
+func (f *CachedFilter) Init(context context.Context, cli *redis.Client, hashTableName string, key string) error {
 	f.cli = cli
 	f.hashTableName = hashTableName
 	f.key = key
-	f.ctx = context.TODO()
+	f.ctx = context
 	var cmd = f.cli.HGet(f.ctx, f.hashTableName, f.key)
 	if err := cmd.Err(); err != nil {
 		if err == redis.Nil {
-			f.cli.HSet(context.TODO(), f.hashTableName, f.key, f.Bytes)
+			f.cli.HSet(context, f.hashTableName, f.key, f.Bytes)
 		} else {
 			return err
 		}

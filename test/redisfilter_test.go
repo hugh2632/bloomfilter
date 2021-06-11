@@ -19,7 +19,7 @@ var key = "test"
 
 func TestInteractiveRedisFalsePositiveRate(t *testing.T) {
 	cli := redis.NewClient(options)
-	interactiveFilter, err := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
+	interactiveFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -33,7 +33,7 @@ func TestInteractiveRedisFalsePositiveRate(t *testing.T) {
 func TestIsSame(t *testing.T) {
 	cli := redis.NewClient(options)
 	// Load CachedFilter
-	cachedFilter, err := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
+	cachedFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,25 +54,23 @@ func TestIsSame(t *testing.T) {
 
 	// load an Interactive Filter to judge if nums have been stored in the filter.
 	// 加载一个交互式过滤器来判断这些数字是否已存在在过滤器中
-	interactiveFilter, _ := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Cached, "test", 10240, bloomfilter.DefaultHash...)
+	interactiveFilter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, "test", 10240, bloomfilter.DefaultHash...)
 	for i := 550; i < 650; i++ {
 		t.Logf("%d, %t\n", i, interactiveFilter.Exists([]byte(strconv.Itoa(i))))
 	}
 }
 
-func TestCachedFilter(t *testing.T) {
+func TestRedisCachedFilter(t *testing.T) {
 	cli := redis.NewClient(options)
-	cachedFilter, err := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
+	cachedFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Log("误判率，False positive rate:", bloomfilter.GetFlasePositiveRate(10240 * 8, 3, 2)) // 5.364385288193686e-11
-	tests := [][]byte{[]byte("test1"), []byte("test2"), []byte("test3")}
-	cachedFilter.Push(tests[0])
-	cachedFilter.Push(tests[1])
-	t.Log(cachedFilter.Exists(tests[0])) // true
-	t.Log(cachedFilter.Exists(tests[1])) // true
-	t.Log(cachedFilter.Exists(tests[2])) // false
+	fillNums(cachedFilter, 250, 300)
+	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(290)))) // true
+	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(299)))) // true
+	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(350)))) // false
 	// must use write to save the data to redis.
 	// 必须使用write方法将数据全部提交到redis服务器
 	cachedFilter.Write()
@@ -80,22 +78,20 @@ func TestCachedFilter(t *testing.T) {
 
 func TestInteractiveFilter(t *testing.T) {
 	cli := redis.NewClient(options)
-	interactiveFilter, err := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
+	interactiveFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	tests := [][]byte{[]byte("test1"), []byte("test2"), []byte("test3")}
-	interactiveFilter.Push(tests[0])
-	interactiveFilter.Push(tests[1])
+	fillNums(interactiveFilter, 250, 300)
 
-	anotherFilter, _ := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
+	anotherFilter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
 
-	t.Log(interactiveFilter.Exists(tests[0])) // true
-	t.Log(anotherFilter.Exists(tests[0]))     // true
+	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(290)))) // true
+	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(290))))     // true
 
-	t.Log(interactiveFilter.Exists(tests[1])) // true
-	t.Log(anotherFilter.Exists(tests[1]))     // true
+	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(299)))) // true
+	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(299))))     // true
 
-	t.Log(interactiveFilter.Exists(tests[2])) // false
-	t.Log(anotherFilter.Exists(tests[2]))     // false
+	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(320)))) // false
+	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(320))) )    // false
 }

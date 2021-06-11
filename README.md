@@ -2,8 +2,8 @@
 
 ## 什么是布隆过滤器
 **布隆过滤器本质上是一个数据结构，它可以用来判断某个元素是否在集合内，具有运行快速，内存占用小的特点。
-A Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
 而高效插入和查询的代价就是，Bloom Filter 是一个基于概率的数据结构：它只能告诉我们一个元素`绝对`不在集合内或`可能`在集合内。
+A Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
 The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either `definitely` is not in the set or `may be` in the set.**
 
 ### 过滤器类型 FilterTypes
@@ -41,18 +41,17 @@ var options = &redis.Options{
 	DB:       0,
 }
 
-func TestCachedFilter(t *testing.T) {
+func TestRedisCachedFilter(t *testing.T) {
 	cli := redis.NewClient(options)
-	cachedFilter, err := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
+	cachedFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	tests := [][]byte{[]byte("test1"), []byte("test2"), []byte("test3")}
-	cachedFilter.Push(tests[0])
-	cachedFilter.Push(tests[1])
-	t.Log(cachedFilter.Exists(tests[0])) // true
-	t.Log(cachedFilter.Exists(tests[1])) // true
-	t.Log(cachedFilter.Exists(tests[2])) // false
+	t.Log("误判率，False positive rate:", bloomfilter.GetFlasePositiveRate(10240 * 8, 3, 2)) // 5.364385288193686e-11
+	fillNums(cachedFilter, 250, 300)
+	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(290)))) // true
+	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(299)))) // true
+	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(350)))) // false
 	// must use write to save the data to redis.
 	// 必须使用write方法将数据全部提交到redis服务器
 	cachedFilter.Write()
@@ -102,24 +101,22 @@ func TestSqlFilterExist(t *testing.T) {
 ```
 func TestInteractiveFilter(t *testing.T) {
 	cli := redis.NewClient(options)
-	interactiveFilter, err := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
+	interactiveFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	tests := [][]byte{[]byte("test1"), []byte("test2"), []byte("test3")}
-	interactiveFilter.Push(tests[0])
-	interactiveFilter.Push(tests[1])
+	fillNums(interactiveFilter, 250, 300)
 
-	anotherFilter, _ := bloomfilter.NewRedisFilter(cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
+	anotherFilter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
 
-	t.Log(interactiveFilter.Exists(tests[0])) // true
-	t.Log(anotherFilter.Exists(tests[0]))     // true
+	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(290)))) // true
+	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(290))))     // true
 
-	t.Log(interactiveFilter.Exists(tests[1])) // true
-	t.Log(anotherFilter.Exists(tests[1]))     // true
+	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(299)))) // true
+	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(299))))     // true
 
-	t.Log(interactiveFilter.Exists(tests[2])) // false
-	t.Log(anotherFilter.Exists(tests[2]))     // false
+	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(320)))) // false
+	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(320))) )    // false
 }
 ```
 
