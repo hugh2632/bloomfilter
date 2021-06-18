@@ -6,7 +6,7 @@
 A Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
 The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either `definitely` is not in the set or `may be` in the set.**
 
-### 过滤器类型 FilterTypes
+## 过滤器类型 FilterTypes
 
 | 类型 Type        | 特点    |  Feature  |
 | --------   | -----  | :----:  |
@@ -14,6 +14,8 @@ The price paid for this efficiency is that a Bloom filter is a probabilistic dat
 | CachedRedisFilter        | 基于MemoryFilter, 在使用`Write`方法时上传数据到Redis   |   Filter based on MemoryFilter, the result will be uploaded to redis server when the `Write` function is called.   |
 | SQLFilter        |   基于MemoryFilter, 在使用`Write`方法时上传数据到Sql数据库。    |  Filter based on MemoryFilter, the result will be uploaded to sql database when the `Write` function is called.  |
 | InteractiveRedisFilter        |    交互式的Redis布隆过滤器，使用`Push`和`Exists`方法时，都将实时与Redis服务器通讯。    |  Interactive filter which will update the redis `BitMap` through `SetBit` and `GetBit` by `Push` and `Exists` function.  |
+
+### 使用方法 Usage
 
 #### MemoryFilter
 ```
@@ -120,7 +122,7 @@ func TestInteractiveFilter(t *testing.T) {
 }
 ```
 
-### 计算误差 Calculate the false positive rate
+## 计算误差 Calculate the false positive rate
 ```
 func TestMemFalsePositiveRate(t *testing.T) {
 	memFilter := bloomfilter.NewMemoryFilter(make([]byte, 10240), bloomfilter.DefaultHash...).(*memory.Filter)
@@ -133,8 +135,8 @@ func TestMemFalsePositiveRate(t *testing.T) {
 }
 ```
 
-### 联系方式 Contact
+# 联系方式 Contact
 讲解视频 <https://www.bilibili.com/video/BV1bJ411t7A8/>
 邮箱    [mailto:hugh2632@hotmail.com]
 
-### End
+# End
