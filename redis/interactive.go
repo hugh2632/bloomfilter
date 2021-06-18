@@ -51,7 +51,8 @@ func (f *InteractiveFilter) Push(str []byte) {
 // should not use this method when use interactive mode.
 // 交互模式不应使用Write方法
 func (f *InteractiveFilter) Write() error {
-	panic("交互模式不应使用Write方法")
+	global.Logger.Println("不应使用的方法")
+	return nil
 }
 
 func (f *InteractiveFilter) Exists(str []byte) bool {

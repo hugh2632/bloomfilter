@@ -68,8 +68,8 @@
       <recent name="D:\Projects\Golang\bloomfilter\redis" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestMemoryFilter in github.com/hugh2632/bloomfilter/test">
-    <configuration name="TestCachedFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestInteractiveFilter in github.com/hugh2632/bloomfilter/test">
+    <configuration name="TestInteractiveFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -77,18 +77,7 @@
       <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestCachedFilter$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestInteractiveRedisFalsePositiveRate in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="bloomfilter" />
-      <working_directory value="$PROJECT_DIR$/test" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/hugh2632/bloomfilter/test" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestInteractiveRedisFalsePositiveRate$" />
+      <pattern value="^TestInteractiveFilter$" />
       <method v="2" />
     </configuration>
     <configuration name="TestIsSame in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -102,7 +91,7 @@
       <pattern value="^TestIsSame$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -113,7 +102,7 @@
       <pattern value="^TestMemFalsePositiveRate$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestMemoryFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestMemoryFilter in github.com/hugh2632/bloomfilter/test (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -124,13 +113,24 @@
       <pattern value="^TestMemoryFilter$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestRedisCachedFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="bloomfilter" />
+      <working_directory value="$PROJECT_DIR$/test" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/hugh2632/bloomfilter/test" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestRedisCachedFilter$" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestMemoryFilter in github.com/hugh2632/bloomfilter/test" />
-        <item itemvalue="Go Test.TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test" />
-        <item itemvalue="Go Test.TestCachedFilter in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestInteractiveFilter in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestRedisCachedFilter in github.com/hugh2632/bloomfilter/test" />
         <item itemvalue="Go Test.TestIsSame in github.com/hugh2632/bloomfilter/test" />
-        <item itemvalue="Go Test.TestInteractiveRedisFalsePositiveRate in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestMemoryFilter in github.com/hugh2632/bloomfilter/test (1)" />
+        <item itemvalue="Go Test.TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -214,22 +214,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1623140578091" />
-    <state width="1877" height="299" key="GridCell.Tab.0.bottom" timestamp="1623320652224">
+    <state width="1877" height="238" key="GridCell.Tab.0.bottom" timestamp="1623376522476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652224" />
-    <state width="1877" height="299" key="GridCell.Tab.0.center" timestamp="1623320652224">
+    <state width="1877" height="238" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
+    <state width="1877" height="238" key="GridCell.Tab.0.center" timestamp="1623376522476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652224" />
-    <state width="1877" height="299" key="GridCell.Tab.0.left" timestamp="1623320652224">
+    <state width="1877" height="238" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
+    <state width="1877" height="238" key="GridCell.Tab.0.left" timestamp="1623376522476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652224" />
-    <state width="1877" height="299" key="GridCell.Tab.0.right" timestamp="1623320652224">
+    <state width="1877" height="238" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
+    <state width="1877" height="238" key="GridCell.Tab.0.right" timestamp="1623376522476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652224" />
+    <state width="1877" height="238" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
     <state width="1877" height="299" key="GridCell.Tab.1.bottom" timestamp="1623320652225">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
