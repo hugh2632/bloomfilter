@@ -12,12 +12,11 @@ import (
 	"hash"
 	"hash/crc64"
 	"hash/fnv"
-	"hash/maphash"
 	"math"
 	"strings"
 )
 
-var DefaultHash = []hash.Hash64{fnv.New64(), crc64.New(crc64.MakeTable(crc64.ISO)), new(maphash.Hash)}
+var DefaultHash = []hash.Hash64{fnv.New64(), crc64.New(crc64.MakeTable(crc64.ISO))}
 var IsDebug = false
 
 type RedisFilterType uint32

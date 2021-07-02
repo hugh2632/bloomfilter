@@ -34,8 +34,7 @@ func (f *CachedFilter) Init(context context.Context, cli *redis.Client, hashTabl
 			return err
 		}
 	} else {
-		var val = cmd.Val()
-		var bytes = []byte(val)
+		var bytes, _ = cmd.Bytes()
 		if len(bytes) == len(f.Bytes) {
 			f.Bytes = bytes
 		} else {
