@@ -44,6 +44,8 @@ type IFilter interface {
 	Exists(content []byte) bool
 	//判断是否为空
 	IsEmpty() bool
+	//清除数据
+	Clear() error
 	//关闭
 	Close() error
 }
@@ -101,7 +103,7 @@ func SqlFilter(db *gorm.DB, key string, byteLen uint64, hashes ...hash.Hash64) (
 			IsChanged: false,
 		},
 	}
-	err := f.Init(db, "bloom", key)
+	err := f.Init(db, "bloom", key, f.Bytes)
 	if err != nil {
 		// TODO:
 		// Deal with 'Table xxx.bloom doesn't exist'. More common method may required other than mysql database.

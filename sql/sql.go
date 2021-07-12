@@ -20,9 +20,23 @@ type Bloom struct {
 	Val []byte
 }
 
+// Delete the related row.
+// 删除相关行
+func (f *SQLFilter) Clear() error {
+	bloom := Bloom{
+		Id:  f.id,
+		Val: nil,
+	}
+	err := f.db.Table(f.tableName).Delete(&bloom).Error
+	if err != nil {
+		return err
+	}
+	return f.Filter.Clear()
+}
+
 // Initial the filter. If the table does not exist in the database, it will be automatically created.
 // 初始化过滤器。如果数据库中没有相应的表，将会被自动创建。
-func (f *SQLFilter) Init(db *gorm.DB, tableName string, key string) error {
+func (f *SQLFilter) Init(db *gorm.DB, tableName string, key string, bytes []byte) error {
 	if key == "" {
 		return global.ErrEmptyKey
 	}
@@ -37,7 +51,7 @@ func (f *SQLFilter) Init(db *gorm.DB, tableName string, key string) error {
 	if bloom.Id == "" {
 		bloom = Bloom{
 			Id:  key,
-			Val: []byte{},
+			Val: bytes,
 		}
 		err = db.Table(f.tableName).Create(bloom).Error
 		if err != nil {

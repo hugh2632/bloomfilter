@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86b05030-4bd3-44c8-be55-d637b4582c61" name="Default Changelist" comment="" />
+    <list default="true" id="86b05030-4bd3-44c8-be55-d637b4582c61" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/test/redisfilter_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test/redisfilter_test.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,8 +68,8 @@
       <recent name="D:\Projects\Golang\bloomfilter\redis" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestInteractiveFilter in github.com/hugh2632/bloomfilter/test">
-    <configuration name="TestInteractiveFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestRedisCachedClear in github.com/hugh2632/bloomfilter/test">
+    <configuration name="TestHash in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -75,10 +77,10 @@
       <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestInteractiveFilter$" />
+      <pattern value="^TestHash$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestIsSame in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestMemoryClear in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -86,10 +88,10 @@
       <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestIsSame$" />
+      <pattern value="^TestMemoryClear$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRedisCachedClear in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -97,10 +99,10 @@
       <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestMemFalsePositiveRate$" />
+      <pattern value="^TestRedisCachedClear$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestMemoryFilter in github.com/hugh2632/bloomfilter/test (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRedisInteractiveClear in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -108,10 +110,10 @@
       <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestMemoryFilter$" />
+      <pattern value="^TestRedisInteractiveClear$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestRedisCachedFilter in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestSqlClear in github.com/hugh2632/bloomfilter/test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="bloomfilter" />
       <working_directory value="$PROJECT_DIR$/test" />
       <framework value="gotest" />
@@ -119,16 +121,16 @@
       <package value="github.com/hugh2632/bloomfilter/test" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestRedisCachedFilter$" />
+      <pattern value="^TestSqlClear$" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestInteractiveFilter in github.com/hugh2632/bloomfilter/test" />
-        <item itemvalue="Go Test.TestRedisCachedFilter in github.com/hugh2632/bloomfilter/test" />
-        <item itemvalue="Go Test.TestIsSame in github.com/hugh2632/bloomfilter/test" />
-        <item itemvalue="Go Test.TestMemoryFilter in github.com/hugh2632/bloomfilter/test (1)" />
-        <item itemvalue="Go Test.TestMemFalsePositiveRate in github.com/hugh2632/bloomfilter/test (1)" />
+        <item itemvalue="Go Test.TestRedisCachedClear in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestRedisInteractiveClear in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestSqlClear in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestMemoryClear in github.com/hugh2632/bloomfilter/test" />
+        <item itemvalue="Go Test.TestHash in github.com/hugh2632/bloomfilter/test" />
       </list>
     </recent_temporary>
   </component>
@@ -204,54 +206,54 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="715" y="222" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1623208316817" />
-    <state width="972" height="466" key="DebuggerActiveHint" timestamp="1623305423487">
+    <state width="972" height="466" key="DebuggerActiveHint" timestamp="1625209785229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="972" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1623305423487" />
+    <state width="972" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1625209785229" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1623140578091">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1623140578091" />
-    <state width="1877" height="238" key="GridCell.Tab.0.bottom" timestamp="1623376522476">
+    <state width="1877" height="640" key="GridCell.Tab.0.bottom" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="238" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
-    <state width="1877" height="238" key="GridCell.Tab.0.center" timestamp="1623376522476">
+    <state width="1877" height="640" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.0.center" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="238" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
-    <state width="1877" height="238" key="GridCell.Tab.0.left" timestamp="1623376522476">
+    <state width="1877" height="640" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.0.left" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="238" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
-    <state width="1877" height="238" key="GridCell.Tab.0.right" timestamp="1623376522476">
+    <state width="1877" height="640" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.0.right" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="238" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623376522476" />
-    <state width="1877" height="299" key="GridCell.Tab.1.bottom" timestamp="1623320652225">
+    <state width="1877" height="640" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.1.bottom" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652225" />
-    <state width="1877" height="299" key="GridCell.Tab.1.center" timestamp="1623320652225">
+    <state width="1877" height="640" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.1.center" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652225" />
-    <state width="1877" height="299" key="GridCell.Tab.1.left" timestamp="1623320652224">
+    <state width="1877" height="640" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.1.left" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652224" />
-    <state width="1877" height="299" key="GridCell.Tab.1.right" timestamp="1623320652225">
+    <state width="1877" height="640" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="1877" height="640" key="GridCell.Tab.1.right" timestamp="1626066968681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="299" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623320652225" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1623289958680">
+    <state width="1877" height="640" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1626066968681" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1625209589905">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1623289958680" />
-    <state x="662" y="254" width="596" height="532" key="find.popup" timestamp="1623304920305">
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1625209589905" />
+    <state x="662" y="254" width="596" height="532" key="find.popup" timestamp="1625209282485">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="662" y="254" width="596" height="532" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1623304920305" />
+    <state x="662" y="254" width="596" height="532" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1625209282485" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -260,6 +262,21 @@
           <url>file://$PROJECT_DIR$/bloomfilter.go</url>
           <line>2</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/test/redisfilter_test.go</url>
+          <line>64</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/redis/cached.go</url>
+          <line>47</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/../../gopath/pkg/mod/gorm.io/gorm@v1.21.10/clause/expression.go</url>
+          <line>69</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

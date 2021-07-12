@@ -95,3 +95,28 @@ func TestInteractiveFilter(t *testing.T) {
 	t.Log(interactiveFilter.Exists([]byte(strconv.Itoa(320)))) // false
 	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(320))) )    // false
 }
+
+func TestRedisCachedClear(t *testing.T) {
+	cli := redis.NewClient(options)
+	filter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, "test", 10240, bloomfilter.DefaultHash...)
+	for i:=0;i<5;i++{
+		t.Log("origin:", filter.Exists([]byte(strconv.Itoa(250))))
+		fillNums(filter, 250, 250)
+		t.Log("filled:", filter.Exists([]byte(strconv.Itoa(250))))
+		filter.Clear()
+		t.Log("cleared:", filter.Exists([]byte(strconv.Itoa(250))))
+	}
+	filter.Write()
+}
+
+func TestRedisInteractiveClear(t *testing.T) {
+	cli := redis.NewClient(options)
+	filter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, "test", 10240, bloomfilter.DefaultHash...)
+	for i:=0;i<5;i++{
+		t.Log("origin:", filter.Exists([]byte(strconv.Itoa(250))))
+		fillNums(filter, 250, 250)
+		t.Log("filled:", filter.Exists([]byte(strconv.Itoa(250))))
+		filter.Clear()
+		t.Log("cleared:", filter.Exists([]byte(strconv.Itoa(250))))
+	}
+}

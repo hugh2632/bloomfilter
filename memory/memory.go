@@ -13,6 +13,15 @@ type Filter struct {
 	IsChanged bool
 }
 
+// Reset all the bytes to zero.
+// 将所有字节重置为0
+func (f *Filter) Clear() error {
+	for i, _ := range f.Bytes {
+		f.Bytes[i] = 0
+	}
+	return nil
+}
+
 func (f *Filter) Push(content []byte) {
 	var byteLen = uint64(len(f.Bytes))
 	if byteLen < 1 {

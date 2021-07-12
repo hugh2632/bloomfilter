@@ -19,6 +19,16 @@ type CachedFilter struct {
 	ctx context.Context
 }
 
+// Delete the key in redis, and then reset all the bytes to zero.
+// 首先删除REDIS中的对应键，再把所有字节置零。
+func (f *CachedFilter) Clear() error {
+	err := f.cli.Del(f.ctx, f.key).Err()
+	if err != nil {
+		return err
+	}
+	return f.Filter.Clear()
+}
+
 // Initial the local bytes from the BITMAP on redis server.
 // 同步Redis服务器上的BITMAP到本地的字节数组。
 func (f *CachedFilter) Init(context context.Context, cli *redis.Client, hashTableName string, key string) error {

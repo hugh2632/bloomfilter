@@ -45,3 +45,14 @@ func BenchmarkMemoryFilter(b *testing.B) {
 		})
 	}
 }
+
+func TestMemoryClear(t *testing.T) {
+	memFilter := bloomfilter.NewMemoryFilter(make([]byte, 10240), bloomfilter.DefaultHash...).(*memory.Filter)
+	for i:=0;i<5;i++{
+		t.Log("origin:", memFilter.Exists([]byte(strconv.Itoa(250))))
+		fillNums(memFilter, 250, 250)
+		t.Log("filled:", memFilter.Exists([]byte(strconv.Itoa(250))))
+		memFilter.Clear()
+		t.Log("cleared:", memFilter.Exists([]byte(strconv.Itoa(250))))
+	}
+}

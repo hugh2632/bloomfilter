@@ -17,6 +17,12 @@ type InteractiveFilter struct {
 	Hashes  []hash.Hash64
 }
 
+// Just delete the key.
+// 直接删除键值
+func (f *InteractiveFilter) Clear() error {
+	return f.Cli.Del(f.Context, f.Key).Err()
+}
+
 // update the bloom table immediately by redis pipeline.
 // 使用Redis pipeline更新bloom表格。
 func (f *InteractiveFilter) Push(str []byte) {
