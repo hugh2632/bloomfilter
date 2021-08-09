@@ -43,6 +43,8 @@ var options = &redis.Options{
 	DB:       0,
 }
 
+var key = "test"
+
 func TestRedisCachedFilter(t *testing.T) {
 	cli := redis.NewClient(options)
 	cachedFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, key, 10240, bloomfilter.DefaultHash...)
