@@ -3,6 +3,7 @@
 ## 什么是布隆过滤器
 **布隆过滤器本质上是一个数据结构，它可以用来判断某个元素是否在集合内，具有运行快速，内存占用小的特点。
 而高效插入和查询的代价就是，Bloom Filter 是一个基于概率的数据结构：它只能告诉我们一个元素`绝对`不在集合内或`可能`在集合内。
+
 A Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
 The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either `definitely` is not in the set or `may be` in the set.**
 
@@ -136,6 +137,19 @@ func TestMemFalsePositiveRate(t *testing.T) {
 	//PASS
 }
 ```
+
+## 计算信息熵，用来测试哈希函数是否是均匀分布的。 Calculate the Information Entropy to test if the hash function is uniformly distributed.
+```
+func TestIsHashFuncUniformlyDistributed(t *testing.T) {
+	for _, f := range bloomfilter.DefaultHash{
+		t.Log(bloomfilter.CalculateInformationEntropy(f))
+	}
+	//不满足的hash，已舍弃
+	t.Log("abandoned hash function:")
+	t.Log(bloomfilter.CalculateInformationEntropy(func() hash.Hash64{return crc64.New(crc64.MakeTable(crc64.ISO))}))
+}
+```
+
 
 # 联系方式 Contact
 讲解视频 <https://www.bilibili.com/video/BV1bJ411t7A8/>

@@ -33,7 +33,7 @@ func getRandomNums(top int, quantity int) map[int]struct{}{
 }
 
 func testFalsePositiveRate(t *testing.T, filter bloomfilter.IFilter, bitsCount, existedCount, hashCount, top int) {
-	rate := bloomfilter.GetFlasePositiveRate(uint(bitsCount), uint(existedCount), uint(hashCount))
+	rate := bloomfilter.GetFalsePositiveRate(uint(bitsCount), uint(existedCount), uint(hashCount))
 	t.Log("理论误判率 Theoretical false positive rate:", rate)
 	nums := getRandomNums(top, existedCount)
 	for m, _ := range nums {
@@ -48,3 +48,4 @@ func testFalsePositiveRate(t *testing.T, filter bloomfilter.IFilter, bitsCount, 
 	realRate := float64(count - existedCount) / float64(top - existedCount)
 	t.Log("实际误判率 Real false positive rate:", realRate)
 }
+

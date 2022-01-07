@@ -2,6 +2,7 @@ package global
 
 import (
 	"errors"
+	"hash"
 	"log"
 )
 
@@ -11,3 +12,5 @@ var (
 	ErrUnMatchLength = errors.New("字节长度不匹配")
 	Logger           = log.Default()
 )
+
+type HashFunc func() hash.Hash64

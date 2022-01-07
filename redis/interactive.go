@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/go-redis/redis/v8"
 	"github.com/hugh2632/bloomfilter/global"
-	"hash"
 )
 
 // Interactive mode. Push/Exists/IsEmpty methods will interactive with the BITMAP on the redis server.
@@ -14,7 +13,7 @@ type InteractiveFilter struct {
 	Cli     *redis.Client
 	Context context.Context
 	ByteLen uint64
-	Hashes  []hash.Hash64
+	Hashes  []global.HashFunc
 }
 
 // Just delete the key.
@@ -27,7 +26,8 @@ func (f *InteractiveFilter) Clear() error {
 // 使用Redis pipeline更新bloom表格。
 func (f *InteractiveFilter) Push(str []byte) {
 	var offsets []int64
-	for _, v := range f.Hashes {
+	for _, h := range f.Hashes {
+		v := h()
 		v.Reset()
 		_, err := v.Write(str)
 		if err != nil {
@@ -62,7 +62,8 @@ func (f *InteractiveFilter) Write() error {
 }
 
 func (f *InteractiveFilter) Exists(str []byte) bool {
-	for _, v := range f.Hashes {
+	for _, h := range f.Hashes {
+		v:=h()
 		v.Reset()
 		_, err := v.Write(str)
 		if err != nil {

@@ -19,12 +19,12 @@ var key = "test"
 
 func TestInteractiveRedisFalsePositiveRate(t *testing.T) {
 	cli := redis.NewClient(options)
-	interactiveFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash...)
+	interactiveFilter, err := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, key, 10240, bloomfilter.DefaultHash[:3]...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	testFalsePositiveRate(t, interactiveFilter, 10240 * 8, 1000, 3, 1000000)
-	// 理论误判率 Theoreticalfalse positive rate: 0.0018230817954481005
+	testFalsePositiveRate(t, interactiveFilter, 10240 * 8, 1000, 3, 100000)
+	// 理论误判率 Theoretical false positive rate: 0.0018230817954481005
 	// 实际误判率 Real false positive rate: 0.0005625625625625626
 }
 
@@ -66,7 +66,7 @@ func TestRedisCachedFilter(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log("误判率，False positive rate:", bloomfilter.GetFlasePositiveRate(10240 * 8, 3, 2)) // 5.364385288193686e-11
+	t.Log("误判率，False positive rate:", bloomfilter.GetFalsePositiveRate(10240 * 8, 3, 2)) // 5.364385288193686e-11
 	fillNums(cachedFilter, 250, 300)
 	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(290)))) // true
 	t.Log(cachedFilter.Exists([]byte(strconv.Itoa(299)))) // true
@@ -96,6 +96,7 @@ func TestInteractiveFilter(t *testing.T) {
 	t.Log(anotherFilter.Exists([]byte(strconv.Itoa(320))) )    // false
 }
 
+//test if clear() works 测试clear()方法有没有起效
 func TestRedisCachedClear(t *testing.T) {
 	cli := redis.NewClient(options)
 	filter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Cached, "test", 10240, bloomfilter.DefaultHash...)
@@ -109,6 +110,7 @@ func TestRedisCachedClear(t *testing.T) {
 	filter.Write()
 }
 
+//test if clear() works 测试clear()方法有没有起效
 func TestRedisInteractiveClear(t *testing.T) {
 	cli := redis.NewClient(options)
 	filter, _ := bloomfilter.NewRedisFilter(context.TODO(), cli, bloomfilter.RedisFilterType_Interactive, "test", 10240, bloomfilter.DefaultHash...)
@@ -118,5 +120,6 @@ func TestRedisInteractiveClear(t *testing.T) {
 		t.Log("filled:", filter.Exists([]byte(strconv.Itoa(250))))
 		filter.Clear()
 		t.Log("cleared:", filter.Exists([]byte(strconv.Itoa(250))))
+		t.Log("--------------------------------------------------")
 	}
 }

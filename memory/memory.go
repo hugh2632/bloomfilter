@@ -2,14 +2,13 @@ package memory
 
 import (
 	"github.com/hugh2632/bloomfilter/global"
-	"hash"
 )
 
 // Memory base filter. All operations are in the memory.
 // 基于内存的过滤器。所有的操作都在内存中进行。
 type Filter struct {
 	Bytes     []byte
-	Hashes    []hash.Hash64
+	Hashes    []global.HashFunc
 	IsChanged bool
 }
 
@@ -28,7 +27,8 @@ func (f *Filter) Push(content []byte) {
 		global.Logger.Println(global.ErrEmptyContent)
 		return
 	}
-	for _, v := range f.Hashes {
+	for _, h := range f.Hashes {
+		v := h()
 		v.Reset()
 		_, err := v.Write(content)
 		if err != nil {
@@ -54,7 +54,8 @@ func (f *Filter) Write() error {
 
 func (f *Filter) Exists(content []byte) bool {
 	var byteLen = uint64(len(f.Bytes))
-	for _, v := range f.Hashes {
+	for _, h := range f.Hashes {
+		v := h()
 		v.Reset()
 		_, err := v.Write(content)
 		if err != nil {
